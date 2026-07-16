@@ -1,0 +1,45 @@
+.containerGeneral {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 50px auto;
+
+    h1 {
+ font-size: 24px;
+ color: #5e0347;
+ font-weight: 600;
+ margin-bottom: 30px;
+    }
+
+    .containerProductosInicio {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin: auto;
+        gap: 16px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+
+    .containerGeneral {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 50px auto;
+
+    h1 {
+font-size: 32px;
+    }
+
+    .containerProductosInicio {        
+        flex-direction: row;
+        gap: 32px;
+        flex-wrap: wrap;
+        max-width: 1200px;
+    }
+}
+}
