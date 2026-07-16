@@ -3,13 +3,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 50px auto;
+    margin: 0px auto 50px;
 
     h1 {
  font-size: 24px;
  color: #5e0347;
  font-weight: 600;
- margin-bottom: 30px;
+ margin: 30px auto;
     }
 
     .containerProductosInicio {
@@ -19,6 +19,34 @@
         flex-direction: column;
         margin: auto;
         gap: 16px;
+    }
+
+    .containerNosotros {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 16px;
+
+        .containerRedes {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 32px;
+
+            div {
+                font-size: 18px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 8px;
+
+                svg {
+               fill: #5e0347;
+                }
+
+            }
+        }
     }
 }
 
@@ -33,6 +61,7 @@
 
     h1 {
 font-size: 32px;
+margin: 0px auto 30px;
     }
 
     .containerProductosInicio {        
@@ -40,6 +69,21 @@ font-size: 32px;
         gap: 32px;
         flex-wrap: wrap;
         max-width: 1200px;
+    }
+
+        .containerNosotros {
+        gap: 32px;
+        max-width: 1000px;
+
+        .containerRedes {
+            gap: 64px;
+
+            div {
+                font-size: 24px;
+                gap: 16px;
+
+            }
+        }
     }
 }
 }
