@@ -5,15 +5,17 @@ function LoginModal({ isOpen, onClose, onLoginSuccess }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  if (!isOpen) return null; // Si no está abierto, no renderiza nada
+  if (!isOpen) return null; 
 
-  const handleSubmit = (e) => {
+const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Login intentado con:', { email, password });
-    
+
     if (onLoginSuccess) {
       onLoginSuccess(); 
     }
+
+    setEmail('');
+    setPassword('');
   };
 
   return (
