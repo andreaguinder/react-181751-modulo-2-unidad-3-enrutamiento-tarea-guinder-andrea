@@ -2,28 +2,31 @@
 
 ## Descripción del Proyecto
 
-Esta aplicación es una tienda/mini dashboard interactivo desarrollado con React, Vite y Sass Modules. El objetivo principal del proyecto es implementar un sistema completo de navegación y control de acceso utilizando **React Router DOM**, abarcando desde rutas públicas estáticas hasta rutas dinámicas y un sistema de autenticación global con estado context para simular rutas protegidas y componentes condicionales.
+Esta aplicación es una tienda/mini dashboard interactivo desarrollado con React, Vite y Sass Modules. El objetivo principal del proyecto es implementar un sistema completo de navegación y control de acceso utilizando **React Router DOM**, abarcando desde rutas públicas estáticas hasta rutas dinámicas, una vista de inicio de sesión dedicada (`/login`), una **ruta protegida** (`/checkout`) mediante componentes guardianes (`ProtectedRoute`), y un sistema de autenticación global con `AuthContext`.
 
 Este proyecto fue desarrollado para la **Unidad 3 del Módulo 2**, poniendo en práctica:
 
 * **Configuración del Enrutador:** Uso de `BrowserRouter`, `Routes` y `Route` como arquitectura base de navegación.
 * **Layouts y Rutas Anidadas:** Estructuración de páginas hijas mediante `<Outlet />` dentro de un layout principal con navegación fija (`Header` y `Footer`).
-* **Navegación Declarativa e Imperativa:** Uso de componentes `<Link>` para la barra de navegación y el hook `useNavigate` para navegación programática (como botones de regreso).
+* **Navegación Declarativa e Imperativa:** Uso de componentes `<Link>` para la barra de navegación y el hook `useNavigate` para navegación programática.
 * **Rutas Dinámicas:** Captura y lectura de parámetros de URL mediante `useParams` para mostrar la vista detallada de productos (`/producto/:id`).
-* **Gestión de Autenticación y Context:** Implementación de `AuthContext` para compartir el estado de inicio de sesión (`isLoggedIn`) entre el `Header`, las vistas de productos y los modales interactivos.
+* **Rutas Protegidas y Redirección Post-Login:** Uso de `<Navigate />` y `useLocation` dentro de un componente `ProtectedRoute` para restringir el acceso a la vista `/checkout`, preservando la ubicación de origen para redirigir automáticamente al usuario tras autenticarse con éxito.
+* **Gestión de Autenticación y Context:** Implementación de `AuthContext` para compartir el estado de inicio de sesión (`isLoggedIn`) en toda la aplicación.
 
 ---
 
 ## Funcionalidades Implementadas
 
 * **Layout Anidado (`MainLayout`):** Mantiene una estructura visual persistente con `Header` y `Footer` mientras el contenido dinámico cambia en el `<Outlet />`.
-* **Navegación por Páginas:** Rutas funcionales para `Inicio`, `Nosotros` y `Contacto`.
+* **Navegación por Páginas:** Rutas funcionales para `Inicio`, `Nosotros`, `Contacto` y `Login`.
 * **Detalle de Producto Dinámico (`/producto/:id`):** Mapeo de parámetros en la URL utilizando `useParams` para renderizar la información de productos específicos.
 * **Formulario de Contacto Validado:** Manejo nativo de validación con HTML5 (`required`) a través del evento `onSubmit` del formulario y modal de confirmación de envío.
-* **Autenticación Centralizada (`LoginModal`):** Manejo de modal de inicio de sesión reactivo desde cualquier parte de la app.
+* **Protección de Rutas (`ProtectedRoute`):** 
+  * Si un usuario no autenticado intenta ingresar a la ruta privada `/checkout` (ya sea por URL o desde la acción de compra/carrito), la aplicación lo intercepta con `<Navigate />` y lo redirige a `/login`.
+  * La página de `/login` detecta la ubicación previa mediante el estado del hook `useLocation` y, una vez iniciada la sesión, lo reenvía automáticamente a la pantalla de `/checkout`.
 * **Comportamiento Condicional de Usuario:**
-  * Si el usuario no está logueado y quiere agregar un producto al carrito, se dispara el modal de Login.
-  * Si el usuario ya inició sesión, el `Header` reemplaza el botón por la opción de "Cerrar Sesión" y las acciones de compra abren directamente el modal de confirmación de éxito.
+  * El `Header` cambia dinámicamente sus acciones mostrando "Iniciar Sesión" (link a `/login`) o el botón de "Cerrar Sesión".
+  * Los usuarios logueados pueden acceder libremente a la vista protegida de `/checkout` y confirmar sus compras.
 
 ---
 
@@ -32,35 +35,36 @@ Este proyecto fue desarrollado para la **Unidad 3 del Módulo 2**, poniendo en p
 La arquitectura modular del proyecto se organiza de la siguiente manera:
 
 * `src/context/`:
-    * `AuthContext.jsx`: Proveedor del estado global de autenticación y apertura del modal de login.
+    * `AuthContext.jsx`: Proveedor del estado global de autenticación (`isLoggedIn`, `login`, `logout`).
 * `src/components/`: 
-    * `Header/`: Navegación principal con enlaces condicionales de sesión.
+    * `Header/`: Navegación principal con enlaces condicionales según el estado de sesión.
     * `Footer/`: Pie de página estático.
     * `MainLayout/`: Contenedor principal con `<Outlet />`.
-    * `LoginModal/`: Componente de interfaz modal para inicio de sesión.
-    * `SuccessModal/`: Modal de confirmación para agregados al carrito.
+    * `ProtectedRoute/`: Componente guardián que evalúa la autenticación para proteger rutas privadas.
+    * `SuccessModal/`: Modal de confirmación para agregados al carrito con opción de navegación al checkout.
     * `SuccessModalForm/`: Modal de confirmación para el envío del formulario de contacto.
     * `ProductCard/`: Tarjeta visual para renderizar cada producto individual.
-    * `ProductDetail/`: Componente con la información detallada del producto y lógica de compra.
+    * `ProductDetail/`: Componente con la información detallada del producto y lógica de navegación.
     * `Loader/`: Indicador visual de estado de carga.
 * `src/pages/`:
     * `Inicio.jsx`: Vista principal con catálogo de productos.
     * `Nosotros.jsx`: Información institucional.
     * `Contacto.jsx`: Vista de contacto con formulario y validación nativa.
     * `Producto.jsx`: Vista dinámica (`/producto/:id`) que renderiza el `ProductDetail`.
+    * `Login.jsx`: Página de inicio de sesión pública con redirección inteligente post-login.
+    * `Checkout.jsx`: Vista protegida privada a la que solo se accede estando autenticado.
 * `src/styles/`: Módulos Sass (`Pages.module.scss`) y estilos globales para el encapsulamiento de diseño.
 
 ---
 
 ## Alcance del Proyecto (Fuera de la Consigna)
 
-Con el fin de mantener el foco exclusivo en los objetivos académicos de la unidad (**Enrutamiento, navegación y rutas dinámicas en React Router**), la aplicación **no incluye**:
+Con el fin de mantener el foco exclusivo en los objetivos académicos de la unidad (**Enrutamiento, navegación y rutas protegidas en React Router**), la aplicación **no incluye**:
 
-* **Vista de Carrito de Compras (`/cart`):** Tampoco su icono/enlace correspondiente en el `Header`.
-* **Proceso de Checkout y Pasarela de Pagos:** La simulación de compra finaliza al confirmar la acción en el modal interactivo.
-* **Persistencia de Datos Compleja:** El flujo prioriza el uso de estado global (`AuthContext`) y paso de parámetros por URL para el aprendizaje del enrutamiento, evitando la sobrecomplejidad de un e-commerce completo con backend o almacenamiento en base de datos.
+* **Vista de Carrito de Compras Extensa (`/cart`):** Se priorizó el flujo directo hacia la vista protegida de confirmación/checkout (`/checkout`).
+* **Pasarela de Pagos Real o Backend:** La autenticación y el estado de compra son simulaciones cliente-side soportadas por React Router DOM y React Context.
 
-> **Nota:** La implementación de un flujo de carrito y pasarela de pago responde a funcionalidades de un e-commerce real que exceden el alcance de la tarea actual y se abordarán en instancias más avanzadas del cursado.
+> **Nota:** La implementación de un flujo complejo de persistencia en base de datos o pasarelas de pago reales responde a funcionalidades que exceden el alcance de la tarea actual y se abordarán en instancias más avanzadas del cursado.
 
 ---
 
