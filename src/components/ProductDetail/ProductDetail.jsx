@@ -19,13 +19,13 @@ function ProductDetail({ image, title, category, description, price }) {
   };
 
   const handleAgregarAlCarrito = () => {
-    if (isLoggedIn) {
-      // SI está logueado en la app, muestro modal de agregado al carrito
-      setIsSuccessOpen(true);
-    } else {
-      // Si NO está logueado, abro modal de login
-      openLogin();
-    }
+if (isLoggedIn) {
+    // Si ya está logueado, podés mantener tu modal o mandarlo al checkout
+    setIsSuccessOpen(true);
+  } else {
+    // En lugar de openLogin(), lo mandás a la ruta protegida
+    navigate('/checkout');
+  }
   };
 
   return (

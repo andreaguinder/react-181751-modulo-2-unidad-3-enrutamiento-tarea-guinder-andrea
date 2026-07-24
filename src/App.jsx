@@ -6,6 +6,9 @@ import Inicio from './pages/Inicio';
 import Nosotros from './pages/Nosotros';
 import Contacto from './pages/Contacto';
 import Producto from './pages/Producto';
+import Login from './pages/Login'; 
+import Checkout from './pages/Checkout'; 
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 import './index.scss'
 
@@ -23,7 +26,17 @@ function App() {
           <Route path="producto/:id" element={<Producto />} />
           <Route path="nosotros" element={<Nosotros />} />
           <Route path="contacto" element={<Contacto />} />
-          
+          <Route path="login" element={<Login />} />
+
+          <Route 
+            path="checkout" 
+            element={
+              <ProtectedRoute>
+                <Checkout />
+              </ProtectedRoute>
+            } 
+          />
+
         </Route>
 
       </Routes>

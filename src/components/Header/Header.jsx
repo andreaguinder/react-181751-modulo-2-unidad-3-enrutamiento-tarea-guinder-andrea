@@ -3,7 +3,8 @@ import { useAuth } from '../../context/AuthContext';
 import styles from './Header.module.scss';
 
 const Header = () => {
-  const { isLoggedIn, logout, openLogin } = useAuth();
+
+  const { isLoggedIn, logout } = useAuth();
 
   return (
     <nav className={styles.navbar}>
@@ -11,7 +12,6 @@ const Header = () => {
       <Link className={styles.link} to='/nosotros'>Nosotros</Link>
       <Link className={styles.link} to='/contacto'>Contacto</Link>
       
-  
       {isLoggedIn ? (
         <div className={styles.userSection}>
           <button className={styles.buttonLogout} onClick={logout}>
@@ -19,9 +19,10 @@ const Header = () => {
           </button>
         </div>
       ) : (
-        <button className={styles.buttonLogin} onClick={openLogin}>
+
+        <Link className={styles.buttonLogin} to='/login'>
           Iniciar Sesión
-        </button>
+        </Link>
       )}
     </nav>
   );
