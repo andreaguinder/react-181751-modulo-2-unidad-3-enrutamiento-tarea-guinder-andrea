@@ -20,10 +20,10 @@ function ProductDetail({ image, title, category, description, price }) {
 
   const handleAgregarAlCarrito = () => {
 if (isLoggedIn) {
-    // Si ya está logueado, podés mantener tu modal o mandarlo al checkout
+
     setIsSuccessOpen(true);
   } else {
-    // En lugar de openLogin(), lo mandás a la ruta protegida
+
     navigate('/checkout');
   }
   };

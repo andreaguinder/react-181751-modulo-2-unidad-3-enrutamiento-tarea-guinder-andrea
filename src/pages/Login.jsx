@@ -6,17 +6,17 @@ import styles from '../styles/Pages.module.scss';
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login } = useAuth(); // O tu función para setear el login
+  const { login } = useAuth(); 
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Si vino redirigido de una ruta protegida, nos guardamos esa ruta. Si no, va al inicio '/'.
+
   const from = location.state?.from?.pathname || '/';
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login(); // Cambia isLoggedIn a true en el Context
-    navigate(from, { replace: true }); // Redirige al destino original
+    login(); 
+    navigate(from, { replace: true }); 
   };
 
   return (
